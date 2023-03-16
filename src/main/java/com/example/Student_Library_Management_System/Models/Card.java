@@ -47,6 +47,26 @@ public class Card {
     @OneToMany(mappedBy = "card", cascade =CascadeType.ALL)
     private List<Book> booksIssued;
 
+    //Card is parent wrt Transactions
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
+    private List<Transactions> transactionsList = new ArrayList<>();
+
+    public List<Book> getBooksIssued() {
+        return booksIssued;
+    }
+
+    public void setBooksIssued(List<Book> booksIssued) {
+        this.booksIssued = booksIssued;
+    }
+
+    public List<Transactions> getTransactionsList() {
+        return transactionsList;
+    }
+
+    public void setTransactionsList(List<Transactions> transactionsList) {
+        this.transactionsList = transactionsList;
+    }
+
     public Card() {
         booksIssued = new ArrayList<>(); // to avoid nullPointerException initializing the list by yourself
     }
