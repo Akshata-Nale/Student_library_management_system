@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="card")
@@ -27,19 +29,26 @@ public class Card {
     private CardStatus cardStatus;  //this variable is used in the parent class while doing the bidirectional mapping
 
 
-    public Student getStudentVariableName() {
-        return studentVariableName;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentVariableName(Student studentVariableName) {
-        this.studentVariableName = studentVariableName;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
+
+    //Card is child wrt Student
     @OneToOne
     @JoinColumn
-    Student studentVariableName;
+    private Student student; //This variable used in parent class while doing bidirectional mapping
+
+    //Card is parent wrt Book
+    @OneToMany(mappedBy = "card", cascade =CascadeType.ALL)
+    private List<Book> booksIssued;
 
     public Card() {
+        booksIssued = new ArrayList<>(); // to avoid nullPointerException initializing the list by yourself
     }
 
     public int getId() {
